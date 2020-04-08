@@ -9,7 +9,7 @@
                 "created_by":
                 {
                     "name": "j.smith@foo.bar",
-                    "full_name": "John Smith2"
+                    "full_name": "John Smith"
                 }
             }
         },
@@ -21,7 +21,7 @@
                 "created_by":
                 {
                     "name": "b.brown@foo.bar",
-                    "full_name": "Bob Brown"
+                    "full_name": "Bob Brown1"
                 }
             }
         },
