@@ -4,3 +4,4 @@ policy "user" {
   enabled           = true
   enforcement_level = "hard-mandatory"
 }
+ 
