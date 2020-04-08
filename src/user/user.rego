@@ -16,7 +16,7 @@ deny["User is not allowed to perform runs from Terraform CLI"] {
     not contains(allowed_cli_users, tfrun.created_by.name)
 }
 
-deny["Only commits from authorized authors are allowed to trigger AWS infrastructure update"] {
+deny["Only commits from authorized authors are allowed to trigger AWS infrastructure update!"] {
     "tfe-vcs" == tfrun.source
     resource := tfplan.resource_changes[_]
     "aws" == resource.provider_name
