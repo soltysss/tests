@@ -22,7 +22,7 @@ resources := [r | r = allowed_resources[_]; not "delete" == r.change.actions[0]]
 
 
 
-#Check tags has owner key
+#Check tags has owner key.
 deny[msg] {
     r := resources[_]
     provider_name := get_basename(r.provider_name)
