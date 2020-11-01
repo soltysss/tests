@@ -1,0 +1,143 @@
+#!/bin/bash -xe
+
+# Updating OS
+apt-get update -yq
+apt-get upgrade -yq
+
+# Installing Docker on an Ubuntu machine
+apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Pulling Drone images
+gcloud iam service-accounts keys create gcloud-account.json  --iam-account ${service_acc_id}
+docker login -u _json_key -p "$(cat gcloud-account.json)" https://gcr.io
+docker pull gcr.io/development-156220/drone/drone:${drone_server_version}
+docker tag gcr.io/development-156220/drone/drone:${drone_server_version} drone/drone
+
+# Creating Drone container
+docker create \
+    --volume=/var/lib/drone:/data \
+    --env=DRONE_DATABASE_DRIVER="mysql" \
+    --env=DRONE_USER_CREATE=${drone_primary_admin} \
+    --env=DRONE_DATABASE_DATASOURCE="${google_sql_user_name}:${google_sql_user_password}@tcp(${cloudsql_private_ip}:3306)/${cloudsql_database_name}?timeout=1s" \
+    --env=DRONE_GITHUB_CLIENT_ID=${drone_github_client_id} \
+    --env=DRONE_GITHUB_CLIENT_SECRET=${drone_github_client_secret} \
+    --env=DRONE_RPC_SECRET=${drone_rpc_secret} \
+    --env=DRONE_SERVER_HOST=${drone_server_host} \
+    --env=DRONE_SERVER_PROTO=https \
+    --env=DRONE_TLS_AUTOCERT=true \
+    --publish=443:443 \
+    --publish=80:80 \
+    --restart=always \
+    --name=drone \
+    drone/drone
+
+# Start Drone Server via systemd unit file
+cat  <<EOF > /etc/systemd/system/drone-server.service
+[Unit]
+Description=Drone Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a drone
+ExecStop=/usr/bin/docker stop -t 2 drone
+
+[Install]
+WantedBy=local.target
+EOF
+systemctl daemon-reload
+systemctl start drone-server
+systemctl enable drone-server
+
+# Install and configure Drone CLI
+curl -L https://github.com/drone/drone-cli/releases/download/v${drone_cli_version}/drone_linux_amd64.tar.gz | tar zx
+install -t /usr/local/bin drone
+export DRONE_SERVER=https://${drone_server_host}
+export DRONE_TOKEN=${drone_primary_admin_token}
+
+# We skip the error because if this is not the first time running
+# these variables will already be in the database and we will get the error.
+set +e
+# Create organization secrets using the command line tools:
+# drone orgsecret add [organization] [name] [data]
+drone orgsecret add ${github_organization} email_host ${email_host}
+drone orgsecret add ${github_organization} email_port ${email_port}
+drone orgsecret add ${github_organization} email_username ${email_username}
+drone orgsecret add ${github_organization} email_password ${email_password}
+set -e
+
+# Time-based Drone Agents Autoscaling
+# -----------------------------------
+
+# We need time-based autoscaling for Drone Agents, 
+# but GCP does not have this option and we implemented it ourselves.
+# We decided that the Drone Server would be responsible for this.
+# Implemented this with systemd.timer based on working hours.
+ 
+cat <<EOF > /etc/systemd/system/drone-agents-scale-up.timer
+[Unit]
+Description=Timer for Scale-up of Drone Agents at the beginning of the working day
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* ${working_hours_start}:00:00 Europe/Kiev
+
+[Install]
+WantedBy=timers.target
+EOF
+
+cat <<EOF > /etc/systemd/system/drone-agents-scale-up.service
+[Unit]
+Description=Service for Scale-up of Drone Agents at the beginning of the working day
+
+[Service]
+Type=oneshot
+ExecStart=/snap/bin/gcloud compute \
+instance-groups managed set-autoscaling \
+${agents_instance_group_name} \
+--zone=${agents_instance_group_zone} \
+--min-num-replicas=${agents_instance_group_min_replicas_in_working_hours} \
+--max-num-replicas=${agents_instance_group_max_replicas}
+EOF
+
+cat <<EOF > /etc/systemd/system/drone-agents-scale-down.timer
+[Unit]
+Description=Timer for Scale-down of Drone Agents at the end of the working day
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* ${working_hours_end}:00:00 Europe/Kiev
+
+[Install]
+WantedBy=timers.target
+EOF
+
+cat <<EOF > /etc/systemd/system/drone-agents-scale-down.service
+[Unit]
+Description=Servie for Scale-down of Drone Agents at the end of the working day
+
+
+[Service]
+Type=oneshot
+ExecStart=/snap/bin/gcloud compute \
+instance-groups managed set-autoscaling \
+${agents_instance_group_name} \
+--zone=${agents_instance_group_zone} \
+--min-num-replicas=${agents_instance_group_min_replicas} \
+--max-num-replicas=${agents_instance_group_max_replicas}
+EOF
+systemctl daemon-reload
+systemctl enable --now drone-agents-scale-up.timer
+systemctl enable --now drone-agents-scale-down.timer
+# End-of Time-based Drone Agents Autoscaling

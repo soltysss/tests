@@ -1,0 +1,5 @@
+crash.log
+state.json
+config.tf
+.terraform
+README.md

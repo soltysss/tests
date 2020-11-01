@@ -1,0 +1,184 @@
+#!/bin/bash -xe
+
+# Updating OS
+apt-get update -yq
+apt-get upgrade -yq
+
+# Installing Docker on an Ubuntu machine according to official doc: https://docs.docker.com/engine/install/ubuntu/
+apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Partition Local SSD
+apt-get install -y lvm2
+pvcreate /dev/nvme0n*
+vgcreate local-ssd /dev/nvme0n*
+# Creating 3 logical volumes:
+# * /dev/local-ssd/swap - for swap memory (10G).
+# * /dev/local-ssd/tmp - for system /tmp directory (20G).
+# * /dev/local-ssd/docker - for /var/lib/docker (use remainder space).
+nstripes=$(ls -1 /dev/nvme0n* | wc -l)
+lvcreate --size 10G --stripes $nstripes --stripesize 4k --name swap local-ssd
+lvcreate --size 20G --stripes $nstripes --stripesize 4k --name tmp local-ssd
+lvcreate -l 100%free --stripes $nstripes --stripesize 4k --name docker local-ssd
+
+# Adding Swap Memory
+mkswap /dev/local-ssd/swap
+swapon /dev/local-ssd/swap
+
+# Formatting a docker lib volume
+mkfs.ext4 -F /dev/local-ssd/docker
+# Formatting a tmp volume
+mkfs.ext4 -F /dev/local-ssd/tmp
+# Mount the local SSD volumes to the instance.
+systemctl stop docker
+mount /dev/local-ssd/docker /var/lib/docker
+echo "/dev/local-ssd/docker /var/lib/docker ext4 defaults 0 0" >> /etc/fstab
+mount /dev/local-ssd/tmp /tmp
+echo "/dev/local-ssd/tmp /tmp ext4 defaults 0 0" >> /etc/fstab
+systemctl start docker
+
+# Creating a directory for storing keys
+mkdir -p /share/.private.d
+# We create link because some pipelines mount /etc/scalr-labs to containers
+ln -s /share/.private.d /etc/scalr-labs
+
+# gsutil just works without key, because we took advantage of automatic service account recognition,
+# grant the appropriate IAM roles to the service account and set up an instance to run as a service account.
+/snap/bin/gsutil cp -r ${gcs_bucket_folder_with_secrets}/*  /share/.private.d
+
+# drone-secrets.json is used in Drone CI Builds
+# to check the Drone CI Build Queue and decide if it is needed to skip the build
+# because of new commit in a branch
+cat << EOF > /share/.private.d/drone-secrets.json
+{
+    "DRONE_SERVER": "https://${drone_rpc_host}",
+    "DRONE_TOKEN": "${drone_primary_admin_token}"
+}
+EOF
+
+# Change mode for all keys
+# It is needed for security reasons
+chmod 600 /share/.private.d/*
+
+# Adding github SSH key to the ssh-agent
+mkdir -p /root/.ssh
+cat << EOF > /root/.ssh/config
+Host github.com
+    User git
+    Hostname github.com
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    PreferredAuthentications publickey
+    IdentityFile "/share/.private.d/git.id_rsa"
+EOF
+
+# Login Docker to GCR
+docker login -u _json_key -p "$(cat /share/.private.d/gcloud-account.json)" https://gcr.io
+
+# Pull Drone Runner image
+docker pull gcr.io/development-156220/drone/drone-runner-docker:${drone_runner_version}
+docker tag gcr.io/development-156220/drone/drone-runner-docker:${drone_runner_version} drone/drone-runner-docker
+
+# Pull */fatmouse/*:master images
+git clone git@github.com:Scalr/fatmouse.git /home/scalr/fatmouse
+cd /home/scalr/fatmouse/
+apt-get install -y python3-pip
+pip3 install dataclasses==0.6 githubpy==1.1.0
+export PATH="$PATH:/snap/bin"
+GCLOUD_KEY_FILE=/share/.private.d/gcloud-account.json python3 clickfile.py pull --gcloud-project development-156220
+
+# Pulling Scalr images
+docker pull gcr.io/development-156220/scalr/mysql:master
+docker tag gcr.io/development-156220/scalr/mysql:master scalr/mysql:master
+
+docker pull gcr.io/development-156220/scalr/php:master
+docker tag gcr.io/development-156220/scalr/php:master scalr/php:master
+
+# Cloning 'int-scalarizr'
+git clone git@github.com:Scalr/int-scalarizr.git /home/scalr/int-scalarizr
+
+# Pulling Scalarizr proxy images
+docker pull gcr.io/development-156220/int-scalarizr/windows-proxy
+docker tag gcr.io/development-156220/int-scalarizr/windows-proxy windows-proxy
+
+docker pull gcr.io/development-156220/int-scalarizr/ubuntu12.04-amd64
+docker tag gcr.io/development-156220/int-scalarizr/ubuntu12.04-amd64  ubuntu12.04-amd64
+docker tag gcr.io/development-156220/int-scalarizr/ubuntu12.04-amd64  ubuntu12.04-amd64:without-cache
+
+docker pull gcr.io/development-156220/int-scalarizr/ubuntu12.04-i386
+docker tag gcr.io/development-156220/int-scalarizr/ubuntu12.04-i386  ubuntu12.04-i386
+docker tag gcr.io/development-156220/int-scalarizr/ubuntu12.04-i386  ubuntu12.04-i386:without-cache
+
+docker pull gcr.io/development-156220/int-scalarizr/centos6-x86_64
+docker tag gcr.io/development-156220/int-scalarizr/centos6-x86_64  centos6-x86_64
+docker tag gcr.io/development-156220/int-scalarizr/centos6-x86_64  centos6-x86_64:without-cache
+
+docker pull gcr.io/development-156220/int-scalarizr/centos6-i386
+docker tag gcr.io/development-156220/int-scalarizr/centos6-i386  centos6-i386
+docker tag gcr.io/development-156220/int-scalarizr/centos6-i386  centos6-i386:without-cache
+
+docker pull gcr.io/development-156220/int-scalarizr/ubuntu1604-docker
+docker tag gcr.io/development-156220/int-scalarizr/ubuntu1604-docker  ubuntu1604-docker
+
+docker pull gcr.io/development-156220/int-scalarizr/ubuntu1604-publisher
+docker tag gcr.io/development-156220/int-scalarizr/ubuntu1604-publisher  ubuntu1604-publisher
+
+# This script is called on shutdown.
+# We redirect all Drone builds on this machine to another.
+cat << EOF > /usr/bin/drone-redirect
+#!/usr/bin/env python3
+${redirect_on_shutdown_script}
+EOF
+chmod +x /usr/bin/drone-redirect
+
+# Start Drone Runner via systemd unit file
+cat  <<EOF > /etc/systemd/system/drone-runner.service
+[Unit]
+Description=Drone Runner
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run \
+--env=DRONE_RUNNER_NAME=$(hostname) \
+--env=DRONE_RPC_PROTO=https \
+--env=DRONE_RPC_HOST=${drone_rpc_host} \
+--env=DRONE_RPC_SECRET=${drone_rpc_secret} \
+--env=DRONE_RUNNER_CAPACITY=${runner_capacity} \
+--env=DRONE_DOCKER_CONFIG=/root/.docker/config.json \
+--rm \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /root/.docker/config.json:/root/.docker/config.json \
+--name drone-runner \
+drone/drone-runner-docker
+ExecStop=/usr/bin/docker kill drone-runner
+
+[Install]
+WantedBy=local.target
+EOF
+
+# Enabling the remote API for dockerd
+mkdir /etc/systemd/system/docker.service.d
+cat <<EOF > /etc/systemd/system/docker.service.d/startup_options.conf
+# /etc/systemd/system/docker.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376
+EOF
+systemctl daemon-reload
+systemctl restart docker.service
+
+systemctl start drone-runner
+systemctl enable drone-runner

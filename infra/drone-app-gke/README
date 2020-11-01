@@ -1,0 +1,5 @@
+Deploy Drone CI/CD into GKE cluster.
+
+Features:
+ - Kubernetes job runner in separate namespace
+ - MySQL database backend

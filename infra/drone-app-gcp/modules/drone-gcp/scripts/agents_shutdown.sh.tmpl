@@ -1,0 +1,8 @@
+#!/bin/bash -xe
+
+# Redirect Drone builds on this machine to another
+systemctl stop drone-runner
+MACHINE=$(hostname) \
+DRONE_TOKEN=${drone_primary_admin_token} \
+DRONE_SERVER=https://${drone_rpc_host} \
+drone-redirect

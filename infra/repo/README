@@ -1,0 +1,10 @@
+Skeleton for a packages repository hosted in Google Storage Bucket
+(to have actual packages inside, you need to trigger build).
+
+The template creates:
+- Google Bucket, configured to serve static website
+- Points ${var.hostname}.scalr-labs.net via CNAME record to the bucket
+- Uploads GPG public keys for APT repository
+- Set ACLs:
+  * WRITE: Drone service account (drone-903@scalr-labs.scalr.com.iam.gserviceaccount.com)
+  * READ: Public
