@@ -23,3 +23,4 @@ variable "owner" {
 output "superlongoutputname1234567dfjknaslkdjlasdjlaksjdaslkdsa" {
   value = var.region
 }
+
