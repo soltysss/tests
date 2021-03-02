@@ -23,7 +23,7 @@ deny["User is not allowed to perform runs from Terraform CLI"] {
 }
 
 deny["Only admin users allowed to perform this action"] {
-    not array_contains(user_team_names, "Admin")
+    array_contains(user_team_names, "Admin")
 }
 
 
