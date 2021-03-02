@@ -27,3 +27,8 @@ data "aws_ami" "ubuntu" {
 output "instance_id" {
  value = aws_instance.test_instance1.id
  sensitive = true
+
+  
+
+ 
+  
