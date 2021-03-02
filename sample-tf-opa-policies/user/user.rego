@@ -22,7 +22,7 @@ deny["User is not allowed to perform runs from Terraform CLI"] {
 }
 
 deny["Only admin users allowed to perform this action"] {
-    array_contains(user_team_names, "Monsters")
+    array_contains(user_team_names, "Admins")
 }
 
 deny["Only commits from authorized authors are allowed to trigger AWS infrastructure update"] {
