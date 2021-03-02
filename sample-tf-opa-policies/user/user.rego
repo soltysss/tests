@@ -5,6 +5,7 @@ import input.tfrun as tfrun
 
 
 allowed_cli_users = ["d.johnson", "j.smith"]
+user_team_names[name] = { name := tfrun.created_by.teams[_].name}
 
 
 array_contains(arr, elem) {
@@ -20,6 +21,11 @@ deny["User is not allowed to perform runs from Terraform CLI"] {
     "cli" == tfrun.source
     not array_contains(allowed_cli_users, tfrun.created_by.username)
 }
+
+deny["Only admin users allowed to perform this action"] {
+    not array_contains(user_team_names, "Admin")
+}
+
 
 deny["Only commits from authorized authors are allowed to trigger AWS infrastructure update"] {
     "vcs" == tfrun.source
