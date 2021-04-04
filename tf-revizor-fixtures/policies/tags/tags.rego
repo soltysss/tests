@@ -14,6 +14,7 @@ get_basename(path) = basename{
 }
 
 
+
 res := tfplan.resource_changes
 
 allowed_resources := [r | r = res[_]; allowed_platforms[_] == get_basename(r.provider_name)]
