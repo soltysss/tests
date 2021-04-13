@@ -24,5 +24,5 @@ resource "aws_instance" "test_instance2" {
 }
 output "public_ip" {
  value = aws_instance.test_instance2.public_ip
- description = "text"
+ description = "text2"
 }
