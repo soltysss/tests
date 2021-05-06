@@ -13,6 +13,8 @@ data "aws_ami" "ubuntu" {
   }
   owners = ["099720109477"]
 }
+
+
 resource "aws_instance" "test_instance2" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
