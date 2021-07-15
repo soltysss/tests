@@ -6,6 +6,8 @@ variable "sleep_time" {
   default = 30
 }
 
+
+
 resource "random_integer" "timeout" {
   min = 30
   max = 180
