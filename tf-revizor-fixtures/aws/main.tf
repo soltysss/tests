@@ -13,7 +13,7 @@ data "aws_ami" "ubuntu" {
   }
   owners = ["099720109477"]
 }
-resource "aws_instance" "test_instance1" {
+resource "aws_instance" "test_instance2" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   subnet_id                   = var.subnet
@@ -23,6 +23,6 @@ resource "aws_instance" "test_instance1" {
     }
 }
 output "public_ip" {
- value = aws_instance.test_instance1.public_ip
+ value = aws_instance.test_instance2.public_ip
  description = "text"
 }
