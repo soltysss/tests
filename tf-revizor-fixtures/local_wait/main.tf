@@ -6,6 +6,11 @@ variable "sleep_time" {
   default = 30
 }
 
+variable "sens" {
+  default   = "bla"
+  sensitive = true
+}
+
 resource "random_integer" "timeout" {
   min = 30
   max = 180
@@ -27,11 +32,16 @@ resource "null_resource" "wait" {
 
 
 output "very_long" {
-  value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"  
+  value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+}
+
+output "test" {
+  value = "laborum ${var.sens}"
+  sensitive = true
 }
 
 output "senc_out" {
-  value = "secret data"
+  value       = "secret data"
   description = "my sensitive output"
-  sensitive = true
+  sensitive   = true
 }
