@@ -7,7 +7,7 @@ variable "sleep_time" {
 }
 
 variable "sens" {
-  default   = "bla"
+  default   = "xxxxxx"
   sensitive = true
 }
 
@@ -23,16 +23,22 @@ resource "random_integer" "timeout" {
 resource "null_resource" "wait" {
   triggers = {
     run_id = var.run_id
+    name   = var.sens
   }
   provisioner "local-exec" {
     command = "sleep ${var.sleep_time}"
   }
 }
 
+module "local-wait" {
+  source = "./modules/local-wait"
+  secret = var.sens
+}
+
 
 
 output "very_long" {
-  value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+  value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 }
 
 output "test" {
@@ -41,7 +47,12 @@ output "test" {
 }
 
 output "senc_out" {
-  value       = "secret data"
+  value       = "xxxxxx"
   description = "my sensitive output"
   sensitive   = true
+}
+
+output "module_res" {
+  value = "${module.local-wait.the_id} xxxxxx"
+  sensitive = true
 }
