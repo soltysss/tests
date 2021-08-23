@@ -35,6 +35,8 @@ module "local-wait" {
   secret = var.sens
 }
 
+  
+  
 
 
 output "very_long" {
