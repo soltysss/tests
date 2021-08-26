@@ -45,6 +45,8 @@ output "test" {
   value = "laborum ${var.sens}"
   sensitive = true
 }
+  
+  
 
 output "senc_out" {
   value       = "xxxxxx"
