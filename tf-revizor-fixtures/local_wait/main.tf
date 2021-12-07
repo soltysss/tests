@@ -16,13 +16,13 @@ resource "random_integer" "timeout" {
   max = 180
 
   keepers = {
-    run_id = var.run_id
+    run_id = "Possibly sensitive ${var.run_id}!!"
   }
 }
 
 resource "null_resource" "wait" {
   triggers = {
-    run_id = var.run_id
+    run_id = "This can be sensitive ${var.run_id}!"
     name   = var.sens
   }
   provisioner "local-exec" {
