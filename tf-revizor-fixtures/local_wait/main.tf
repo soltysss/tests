@@ -60,4 +60,8 @@ output "module_res" {
 output "sleeped_for" {
   value = "${var.sleep_time} this is suppose to be sensitive"
 }
+
+output "run_id" {
+  value = "${var.run_id} this is suppose to be sensitive. real value is 55555555"
+}
   
