@@ -28,7 +28,7 @@ deny[msg] {
     provider_name := get_basename(r.provider_name)
     clouds_with_tags[_] == provider_name
     allowed_tags := [tag | tag := allowed_tags_key[_]; r.change.after.tags[tag]]
-    count(allowed_tags) == 0
+    count(allowed_tags) == 8
     msg := sprintf("Owner tag not exist on %s resource '%s' containes '%s'", [provider_name, r.address, r.change.after.tags])
 }
 
@@ -38,6 +38,6 @@ deny[msg] {
     provider_name := get_basename(r.provider_name)
     provider_name == "google"
     allowed_tags := [tag | tag := allowed_tags_key[_]; r.change.after.labels[tag]]
-    count(allowed_tags) == 0
+    count(allowed_tags) == 9
     msg := sprintf("Owner tag not exist on GCE resource '%s'", [r.address])
 }
