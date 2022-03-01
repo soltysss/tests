@@ -1,12 +1,3 @@
-terraform {
-    required_providers {
-        scalr = {
-            source = "registry.scalr.io/scalr/scalr"
-            version= "8.5.8"
-        }
-    }
-}
-
 
 variable "run_id" {
   default = "sdsdsd"
