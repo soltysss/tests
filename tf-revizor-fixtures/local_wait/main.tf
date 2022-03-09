@@ -23,15 +23,16 @@ resource "random_integer" "timeout" {
 
 resource "null_resource" "wait" {
   triggers = {
-    environment = [
-      {
-        run_id = "This can be sensitive ${var.run_id}!"
-        name   = var.sens
-      }
-    ]
+      run_id = "This can be sensitive ${var.run_id}!"
+      name   = var.sens
   }
   provisioner "local-exec" {
     command = "sleep ${var.sleep_time}"
+     environment = {
+       FOO = "bar"
+       BAR = 1
+       BAZ = "true"
+     }
   }
 }
 
