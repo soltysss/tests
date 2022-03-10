@@ -17,6 +17,11 @@ variable "aws_secret_key" {
   sensitive = true
 }
 
+variable "sens" {
+  sensitive = true
+  default   = "secret data"
+}
+
 provider "aws" {
   profile = "default"
   region  = "us-west-2"
@@ -69,7 +74,7 @@ resource "aws_lambda_function" "test_lambda" {
   environment {
     variables = {
       foo = "bar"
-      bar = "foo"
+      bar = var.sens
     }
   }
 }
