@@ -68,6 +68,6 @@ output "sleeped_for" {
 }
 
 output "run_id" {
-  value = "${var.run_id} this is suppose to be sensitive. real value is 55555555"
+  value = "${var.run_id} this is suppose to be sensitive. real value is 555555"
 }
   
