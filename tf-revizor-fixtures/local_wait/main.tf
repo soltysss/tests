@@ -34,7 +34,7 @@ resource "null_resource" "wait" {
   }
 }
 
-module "wait" {
+module "test" {
   source  = "mainiacp.org4.te.scalr-labs.net/env-svrcnchebt61e30/test/wait"
   version = "1.0.2"
 }
