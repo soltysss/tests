@@ -25,7 +25,7 @@ resource "random_integer" "timeout" {
   }
 }
 
-resource "null_resource" "wait" {
+resource "null_resource" "wait_resource" {
   triggers = {
     run_id = var.run_id
   }
@@ -34,7 +34,7 @@ resource "null_resource" "wait" {
   }
 }
 
-module "test" {
+module "wait_test" {
   source  = "mainiacp.org4.te.scalr-labs.net/env-svrcnchebt61e30/test/wait"
   version = "1.0.2"
 }
