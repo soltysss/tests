@@ -1,3 +1,13 @@
+terraform {
+  backend "remote" {
+  hostname = "mainiacp.org4.te.scalr-labs.net"
+    organization = "env-svrcnchebt61e30"
+    workspaces {
+      name = "wait"
+    }
+  }
+}
+
 variable "run_id" {
   default = "sdsdsd"
 }
