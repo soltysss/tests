@@ -72,6 +72,6 @@ output "run_id" {
 }
   
 output "test_output" {
-  value = "Test output 2"
+  value = "Test output 1"
 } 
   
