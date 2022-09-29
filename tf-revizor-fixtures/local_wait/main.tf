@@ -4,7 +4,7 @@ variable "run_id" {
 }
 
 variable "sleep_time" {
-  default = 30
+  default = 5
 }
 
 variable "sens" {
