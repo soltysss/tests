@@ -1,6 +1,6 @@
 
 variable "run_id" {
-  default = "run-jyslljjfs84jsl11112"
+  default = "run-jyslljjfs84jsl"
 }
 
 variable "sleep_time" {
