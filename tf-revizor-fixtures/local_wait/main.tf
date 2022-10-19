@@ -7,6 +7,10 @@ variable "sleep_time" {
   default = 5
 }
 
+variable "sens" {
+  default   = "xxxxxx"
+  sensitive = true
+}
 
 resource "random_integer" "timeout" {
   min = 30
