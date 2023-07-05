@@ -43,7 +43,7 @@ output "very_long" {
 }
 
 output "provider_id" {
-  value = data.vcs.id
+  value = data.scalr_vcs_provider.vcs.id
 }
 
 output "senc_out" {
