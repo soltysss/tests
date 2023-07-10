@@ -1,11 +1,3 @@
-terraform {
-    required_providers {
-        scalr = {
-            source = "registry.scalr.io/scalr/scalr"
-        }
-    }
-}
-
 
 variable "run_id" {
   default = "sdsdsd"
@@ -13,10 +5,6 @@ variable "run_id" {
 
 variable "sleep_time" {
   default = 30
-}
-
-data "scalr_vcs_provider" "vcs" {
-  name = "sts"
 }
 
 resource "random_integer" "timeout" {
@@ -44,6 +32,10 @@ output "very_long" {
 
 output "provider_id" {
   value = data.scalr_vcs_provider.vcs.id
+}
+
+output "bla" {
+    value = "follow the [documentation](https://docs.scalr.io/docs/scalr) on how to enable"
 }
 
 output "senc_out" {
