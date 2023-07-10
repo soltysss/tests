@@ -31,7 +31,7 @@ output "very_long" {
 }
 
 output "bla" {
-    value = "follow the [documentation](https://docs.scalr.io/docs/scalr) on how to enable"
+    value = "follow the <a href='https://docs.scalr.io/docs/scalr'>documentation </a> on how to enable"
 }
 
 output "senc_out" {
