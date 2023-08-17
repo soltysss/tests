@@ -20,6 +20,7 @@ allowed_resources := [r | r = res[_]; allowed_platforms[_] == get_basename(r.pro
 resources := [r | r = allowed_resources[_]; not "delete" == r.change.actions[0]]
 
 
+
 #Check tags has owner key
 deny[msg] {
     r := resources[_]
