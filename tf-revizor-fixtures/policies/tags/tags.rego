@@ -30,7 +30,7 @@ deny[msg] {
     msg := sprintf("Owner tag not exist on %s resource '%s' containes '%s'", [provider_name, r.address, r.change.after.tags])
 }
 
-# fix for gce
+# fix for gce  
 deny[msg] {
     r := resources[_]
     provider_name := get_basename(r.provider_name)
