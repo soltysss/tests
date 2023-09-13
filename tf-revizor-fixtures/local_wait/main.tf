@@ -20,6 +20,7 @@ resource "random_integer" "timeout" {
   keepers = {
     run_id = var.run_id
   }
+
 }
 
 
@@ -33,7 +34,6 @@ resource "null_resource" "wait" {
     command = "sleep ${var.sleep_time}"
   }
 }
-
 
 
 module "local-wait" {
