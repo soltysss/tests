@@ -24,3 +24,4 @@ test_vcs_user_not_aws {
     result = deny with input as data.mock.vcs_user_not_aws
     count(result) == 0
 }
+
