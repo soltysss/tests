@@ -79,8 +79,4 @@ output "int_output" {
 output "float_output" {
   value = 1.5
 } 
-
-output "bool_output" {
-  value = false
-} 
   
