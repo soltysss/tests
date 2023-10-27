@@ -71,12 +71,4 @@ output "sleeped_for" {
 output "run_id" {
   value = "${var.run_id} this is suppose to be sensitive. real value is 555555"
 }
-
-output "int_output" {
-  value = 1
-} 
-
-output "float_output" {
-  value = 1.5
-} 
   
