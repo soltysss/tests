@@ -72,7 +72,15 @@ output "run_id" {
   value = "${var.run_id} this is suppose to be sensitive. real value is 555555"
 }
 
-output "test_output" {
-  value = "Test output 3"
+output "int_output" {
+  value = 1
+} 
+
+output "float_output" {
+  value = 1.5
+} 
+
+output "bool_output" {
+  value = false
 } 
   
