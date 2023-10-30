@@ -8,10 +8,15 @@ variable "sleep_time" {
   default = 5
 }
 
+
+
 variable "sens" {
   default   = "xxxxxx"
   sensitive = true
 }
+
+
+
 
 resource "random_integer" "timeout" {
   min = 30
@@ -20,7 +25,10 @@ resource "random_integer" "timeout" {
   keepers = {
     run_id = "Possibly sensitive ${var.run_id}!!"
   }
+
 }
+
+
 
 resource "null_resource" "wait" {
   triggers = {
@@ -36,6 +44,7 @@ resource "null_resource" "wait" {
      }
   }
 }
+
 
 module "local-wait" {
   source = "./modules/local-wait"
@@ -53,11 +62,13 @@ output "test" {
   sensitive = true
 }
 
+
 output "senc_out" {
   value       = "xxxxxx"
   description = "my sensitive output"
   sensitive   = true
 }
+
 
 output "module_res" {
   value = "${module.local-wait.the_id} xxxxxx"
