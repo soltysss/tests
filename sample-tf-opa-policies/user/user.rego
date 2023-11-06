@@ -21,6 +21,7 @@ deny["User is not allowed to perform runs from Terraform CLI"] {
     not array_contains(allowed_cli_users, tfrun.created_by.username)
 }
 
+
 deny["Only admin users allowed to perform this action"] {
     "vcs" != tfrun.source
     not array_contains(user_team_names, "Admins")
