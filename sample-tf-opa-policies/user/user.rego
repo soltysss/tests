@@ -27,8 +27,6 @@ deny["Only admin users allowed to perform this action"] {
     not array_contains(user_team_names, "Admins")
 }
 
-
-
 deny["Only commits from authorized authors are allowed to trigger AWS infrastructure update"] {
     "vcs" == tfrun.source
     resource := tfplan.resource_changes[_]
