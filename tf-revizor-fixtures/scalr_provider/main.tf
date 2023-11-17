@@ -1,6 +1,7 @@
 resource "scalr_provider_configuration" "scalr" {
   name       = "scalr"
   account_id = "acc-svrcncgh453bi8g"
+  version = "1.1.0"
 }
 
 
