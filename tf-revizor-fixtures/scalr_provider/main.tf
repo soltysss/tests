@@ -19,7 +19,7 @@ provider "scalr" {
 resource "scalr_variable" "example" {
   key          = "my_key_name"
   value        = "my_value_name"
-  category     = "terraform"
+  category     = "shell"
   description  = "variable description"
   account_id   = "acc-svrcncgh453bi8g"
 }
