@@ -21,5 +21,4 @@ resource "scalr_variable" "example" {
   value        = "my_value_name"
   category     = "shell"
   description  = "variable description"
-  account_id   = "acc-svrcncgh453bi8g"
 }
