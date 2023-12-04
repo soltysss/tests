@@ -41,3 +41,4 @@ deny[msg] {
     count(allowed_tags) == 0
     msg := sprintf("Owner tag not exist on GCE resource '%s'", [r.address])
 }
+
