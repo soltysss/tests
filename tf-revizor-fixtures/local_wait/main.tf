@@ -42,8 +42,6 @@ module "local-wait" {
   secret = var.sens
 }
 
-
-
 output "very_long" {
   value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 }
