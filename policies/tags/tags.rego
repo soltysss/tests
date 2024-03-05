@@ -1,7 +1,7 @@
 package terraform
 
 import input.tfplan as tfplan
-import rego.v1
+import rego.v1 as regov1
 
 allowed_platforms = ["aws", "azurerm", "google"]
 allowed_tags_key = ["owner", "test-env-owner"]
