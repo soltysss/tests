@@ -2,8 +2,9 @@ package terraform
 
 import input.tfrun as tfrun
 
-variants := ["-dev", "-test", "-prod"]  # Add more variants as needed
+forbidden_strings := ["-dev", "-test", "-prod"]  # Add more strings as needed
 
 deny["Forbidden workspace name"] {
-    count(variant := variants; endswith(tfrun.workspace.name, variant)) > 0
+    string := forbidden_strings[_]
+    endswith(tfrun.workspace.name, string)
 }
