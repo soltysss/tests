@@ -4,3 +4,6 @@
 [submodule "fixures"]
 	path = tf-revizor-fixtures/local_wait_submodule/modules/tf-revizor-fixtures
 	url = git@github.com:Scalr/tf-revizor-fixtures.git
+[submodule "tf-revizor-fixtures/local_wait_submodule/modules/test2"]
+	path = tf-revizor-fixtures/local_wait_submodule/modules/test2
+	url = git@github.com:soltysss/test2.git
