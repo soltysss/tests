@@ -1,3 +1,6 @@
 [submodule "tf-revizor-fixtures/local_wait_submodule/modules/tf-revizor-fixtures"]
 	path = tf-revizor-fixtures/local_wait_submodule/modules/tf-revizor-fixtures
 	url = https://github.com/Scalr/tf-revizor-fixtures
+[submodule "fixures"]
+	path = tf-revizor-fixtures/local_wait_submodule/modules/tf-revizor-fixtures
+	url = git@github.com:Scalr/tf-revizor-fixtures.git
