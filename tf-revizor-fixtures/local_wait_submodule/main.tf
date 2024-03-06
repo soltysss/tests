@@ -38,7 +38,7 @@ resource "null_resource" "wait" {
 }
 
 module "local-wait" {
-  source = "./modules/tf-revizor-fixtures/terraform-null-module"
+  source = "./modules/test2/terraform-test-wait"
   secret = var.sens
 }
 
