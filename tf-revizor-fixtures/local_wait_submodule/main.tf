@@ -39,7 +39,6 @@ resource "null_resource" "wait" {
 
 module "local-wait" {
   source = "./m/test2/terraform-test-wait"
-  secret = var.sens
 }
 
 output "very_long" {
