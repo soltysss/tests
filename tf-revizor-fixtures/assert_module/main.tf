@@ -16,6 +16,7 @@ resource "null_resource" "wait" {
 
 module "assertion_unix_only" {
   source  = "Invicton-Labs/assertion/null"
+  version = "0.2.4"
 
   // The condition to ensure is TRUE
   // In this example, assert that the operating system uses forward slashes for path separators
