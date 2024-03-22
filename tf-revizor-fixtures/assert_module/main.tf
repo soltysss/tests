@@ -3,6 +3,7 @@ resource "null_resource" "wait" {
   triggers = {
       run_id = "Bla"
       name   = "bla"
+  }
   provisioner "local-exec" {
     command = "sleep 1"
      environment = {
