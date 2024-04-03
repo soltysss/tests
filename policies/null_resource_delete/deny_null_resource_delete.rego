@@ -7,5 +7,5 @@ deny[reason] if {
   resource.type == "null_resource"
   action == "delete"
 
-  reason := "Confirm the deletion of the null_resource %q",
+  reason := "Confirm the deletion of the null_resource"
 }
