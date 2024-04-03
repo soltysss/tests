@@ -1,6 +1,6 @@
 package terraform
 
-import rego.v1
+# import rego.v1
 
 deny[reason] if {
   resource := input.tfplan.resource_changes[_]
