@@ -1,6 +1,6 @@
 package terraform
 
-deny[reason] if {
+deny[reason] {
   resource := input.tfplan.resource_changes[_]
   action := resource.change.actions[count(resource.change.actions) - 1]
 
