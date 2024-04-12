@@ -54,7 +54,7 @@ resource "scalr_workspace" "ws_vcs" {
 
 variable "ws_vcs_repo_identifier" {
   description = "'vcs_repo.indentifier' used to create workspace"
-  default     = "soltysss"
+  default     = "soltysss/tests"
 }
 variable "ws_vcs_repo_branch" {
   description = "'vcs_repo.branch' used to create workspace"
