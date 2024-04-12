@@ -38,7 +38,7 @@ output "out_vcs" {
 
 resource "scalr_workspace" "ws_vcs" {
   name            = "workspaces-${count.index}"
-  count = 50
+  count = 40
   auto_queue_runs = "never"
   environment_id  = scalr_environment.sts_env.id
   vcs_provider_id = data.scalr_vcs_provider.sts_vcs.id
@@ -107,3 +107,20 @@ resource "scalr_iam_team" "team" {
 
   users = ["user-suh84u6vhn64l0o"]
 }
+
+resource "scalr_access_policy" "access-policy" {
+  subject {
+    type = "team"
+    id   = scalr_iam_team.team.id
+  }
+  scope {
+    type = "environment"
+    id   = scalr_environment.dana_env.id
+  }
+
+  role_ids = [
+    scalr_role.role.id
+  ]
+ }
+
+
