@@ -105,5 +105,5 @@ resource "scalr_iam_team" "team" {
   description = "Regression ${formatdate("DDMMYYYY", timestamp())}"
   account_id  =  data.scalr_current_account.data_acc.id
 
-  users = ["user-v0o818va5994aviu9"]
+  users = ["user-suh84u6vhn64l0o"]
 }
