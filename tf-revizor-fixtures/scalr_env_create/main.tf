@@ -115,7 +115,7 @@ resource "scalr_access_policy" "access-policy" {
   }
   scope {
     type = "environment"
-    id   = scalr_environment.dana_env.id
+    id   = scalr_environment.sts_env.id
   }
 
   role_ids = [
