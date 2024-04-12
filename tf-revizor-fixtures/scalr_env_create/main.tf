@@ -62,7 +62,7 @@ variable "ws_vcs_repo_branch" {
 }
 variable "ws_vcs_workdir" {
   description = "Working directory (path) used to create workspace. Submit blank if configuration is located in the repository root."
-  default     = "tf-revizor-fixtures/local_wait"
+  default     = "tf-revizor-fixtures/local_wait2"
 }
 data "scalr_workspace" "data_ws" {
   name           = scalr_workspace.ws_vcs[0].name
