@@ -38,7 +38,7 @@ output "out_vcs" {
 
 resource "scalr_workspace" "ws_vcs" {
   name            = "workspaces-${count.index}"
-  count = 40
+  count = 5
   auto_queue_runs = "never"
   environment_id  = scalr_environment.sts_env.id
   vcs_provider_id = data.scalr_vcs_provider.sts_vcs.id
