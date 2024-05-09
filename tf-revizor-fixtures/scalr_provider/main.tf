@@ -22,3 +22,10 @@ resource "scalr_variable" "example" {
   category     = "shell"
   description  = "variable description"
 }
+
+resource "scalr_variable" "example2" {
+  key          = "my_key_name"
+  value        = "my_value_name"
+  category     = "shell"
+  description  = "variable description"
+}
