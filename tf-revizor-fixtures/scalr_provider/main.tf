@@ -9,6 +9,7 @@ terraform {
 
 variable "scalr_host_name" {}
 variable "scalr_api_token" {}
+variable "blabla" {}
 
 
 provider "scalr" {
