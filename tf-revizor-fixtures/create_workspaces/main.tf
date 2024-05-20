@@ -49,8 +49,8 @@ variable "ws_vcs_workdir" {
 
 
 resource "scalr_workspace_run_schedule" "example" {
-  for_each = scalr_workspace.ws_vcs
-  workspace_id     = each.value.id
+  count = length(scalr_workspace.ws_vcs)
+  workspace_id     = scalr_workspace.ws_vcs[count.index].id
   apply_schedule   = "*/5 * * * *"
   destroy_schedule = "*/6 * * * *"
 }
