@@ -13,7 +13,9 @@ output "out_acc" {
   value = yamlencode(data.scalr_current_account.data_acc)
 }
 
-
+data "scalr_vcs_provider" "sts_vcs" {
+  name = "sts"
+}
 
 resource "scalr_workspace" "ws_vcs" {
   name            = "workspaces-${count.index}"
