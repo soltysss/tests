@@ -56,13 +56,7 @@ output "senc_out" {
   description = "my sensitive output"
   sensitive   = true
 }
-
-/*
-output "module_res" {
-  value = "${module.local-wait.the_id} xxxxxx"
-  sensitive = true
-}
-*/  
+ 
 output "sleeped_for" {
   value = "${var.sleep_time} this is suppose to be sensitive"
 }
