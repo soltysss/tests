@@ -1,13 +1,14 @@
 package terraform
 
-import rego.v1
+import input.tfplan as tfplan
+import rego.v1 as regov1
 
 delay(n) = true if {
     count([x | x := 1..n]) > 0
 }
 
 deny[reason] if {
-  resource := input.tfplan.resource_changes[_]
+  resource := tfplan.resource_changes[_]
   action := resource.change.actions[count(resource.change.actions) - 1]
 
   resource.type == "null_resource"
