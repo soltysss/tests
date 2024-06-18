@@ -4,7 +4,8 @@ import rego.v1
 
 # Artificial delay function
 delay(n) = true {
-    count([true | i := 1; i <= n; i + 1])
+    # Create a list of length `n` to introduce delay
+    count([i | i := 1; i <= n; i + 1]) == n
 }
 
 deny[reason] if {
