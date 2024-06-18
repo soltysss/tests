@@ -3,8 +3,8 @@ package terraform
 import rego.v1
 
 # Artificial delay function
-delay(n) {
-    _ := [ x | x := 0; count([ y | y := 0; y < n ]) ]
+delay(n) = true {
+    count([true | i := 1; i <= n; i + 1])
 }
 
 deny[reason] if {
