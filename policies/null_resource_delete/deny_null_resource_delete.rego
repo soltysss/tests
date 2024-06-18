@@ -2,7 +2,6 @@ package terraform
 
 import rego.v1
 
-# Artificial delay function
 delay(n) = true if {
     count([x | x := 1..n]) > 0
 }
@@ -13,7 +12,7 @@ deny[reason] if {
 
   resource.type == "null_resource"
   action == "delete"
-  # Introduce a delay loop
+
   delay(1000000)  # Adjust this number to control the delay duration
 
   reason := sprintf(
