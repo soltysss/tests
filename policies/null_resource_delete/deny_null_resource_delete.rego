@@ -1,7 +1,6 @@
 package terraform
 
 import input.tfplan as tfplan
-import rego.v1 as regov1
 
 delay(n) = true if {
     count([x | x := 1..n]) > 0
