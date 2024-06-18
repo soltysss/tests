@@ -4,8 +4,7 @@ import rego.v1
 
 # Artificial delay function
 delay(n) if {
-    pattern := ".*"  # Simple regex pattern to match any string
-    count([i | i := 1; i <= n; i + 1; re_match(pattern, sprintf("%d", [i]))]) == n
+    count([i | i := 1; i <= n; i + 1]) == n
 }
 
 deny[reason] if {
