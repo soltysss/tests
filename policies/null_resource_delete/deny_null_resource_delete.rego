@@ -4,7 +4,7 @@ import rego.v1
 
 # Artificial delay function
 delay(n) if {
-    count([re_match("^[\\w.+\\-]+@[a-zA-Z\\d\\-]+\\.[a-zA-Z\\d\\-.]+$", "blabla@test.com") | i := 1; i <= n; i + 1]) == n
+    count([regex.match(("^[\\w.+\\-]+@[a-zA-Z\\d\\-]+\\.[a-zA-Z\\d\\-.]+$", "blabla@test.com") | i := 1; i <= n; i + 1]) == n
 }
 
 deny[reason] if {
