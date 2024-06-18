@@ -16,7 +16,7 @@ deny[reason] if {
   action == "delete"
 
   # Introduce a delay loop
-  delay(1000000)
+  delay(100000000)
 
   reason := sprintf(
    "Confirm the deletion of the null_resource %q",
