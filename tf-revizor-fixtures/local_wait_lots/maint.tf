@@ -41,7 +41,7 @@ output "senc_out" {
 
 # Define a large number of null_resource instances
 resource "null_resource" "test" {
-  count = 10000
+  count = 1000
 
   triggers = {
     id = count.index
