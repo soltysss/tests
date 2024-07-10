@@ -51,6 +51,8 @@ output "test" {
   sensitive = true
 }
 
+
+
 output "senc_out" {
   value       = "xxxxxx"
   description = "my sensitive output"
