@@ -8,6 +8,9 @@ variable "sleep_time" {
   default = 5
 }
 
+
+
+
 variable "sens" {
   default   = "xxxxxx"
   sensitive = true
@@ -42,6 +45,7 @@ module "local-wait" {
   secret = var.sens
 }
 
+
 output "very_long" {
   value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 }
@@ -56,6 +60,9 @@ output "senc_out" {
   description = "my sensitive output"
   sensitive   = true
 }
+
+
+
 
 /*
 output "module_res" {
