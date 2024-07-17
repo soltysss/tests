@@ -3,7 +3,6 @@ variable "run_id" {
   default = "run-jyslljjfs84jsl111127777888"
 }
 
-
 variable "sleep_time" {
   default = 5
 }
@@ -51,11 +50,15 @@ output "test" {
   sensitive = true
 }
 
+
+
 output "senc_out" {
   value       = "xxxxxx"
   description = "my sensitive output"
   sensitive   = true
 }
+
+
 
 /*
 output "module_res" {
