@@ -19,7 +19,7 @@ variable "sleep_time" {
 }
 
 variable "env" {
-  default = "tfenv1"
+  default = "env-svrcnchebt61e30"
 }
 
 variable "ws" {
@@ -40,6 +40,7 @@ data "terraform_remote_state" "wait" {
   backend = "remote"
 
   config = {
+    hostname = "mainiacp.soltys-test.testenv.scalr.dev"
     organization = var.env
     workspaces = {
       name = var.ws
