@@ -1,4 +1,15 @@
 
+terraform {
+  backend "remote" {
+    hostname = "mainiacp.soltys-test.testenv.scalr.dev"
+    organization = "env-svrcnchebt61e30"
+    workspaces {
+      name = "access_remote_state"
+    }
+  }
+}
+
+
 variable "run_id" {
   default = "sdsdsd"
 }
