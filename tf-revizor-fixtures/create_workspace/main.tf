@@ -22,6 +22,7 @@ resource "scalr_workspace" "me" {
   vcs_repo {
     identifier = "soltysss/tests"
     branch = "main"
+    trigger_prefixes = ["tf-revizor-fixtures/local_wait"]
   }
   working_directory = "tf-revizor-fixtures/local_wait"
   vcs_provider_id = data.scalr_vcs_provider.example.id
