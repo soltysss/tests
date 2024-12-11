@@ -64,6 +64,8 @@ output "module_res" {
   sensitive = true
 }
 
+
+
 output "sleeped_for" {
   value = "${var.sleep_time} this is suppose to be sensitive"
 }
