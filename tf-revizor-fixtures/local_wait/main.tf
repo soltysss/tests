@@ -60,8 +60,6 @@ output "senc_out" {
 }
 
 
-
-
 /*
 output "module_res" {
   value = "${module.local-wait.the_id} xxxxxx"
