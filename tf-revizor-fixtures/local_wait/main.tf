@@ -9,8 +9,6 @@ variable "sleep_time" {
 }
 
 
-
-
 variable "sens" {
   default   = "xxxxxx"
   sensitive = true
