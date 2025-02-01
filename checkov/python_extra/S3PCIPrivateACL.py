@@ -8,7 +8,7 @@ from checkov.common.models.enums import CheckResult, CheckCategories
 
 class S3PCIPrivateACL(BaseResourceCheck):
     def __init__(self) -> None:
-        name = "Ensure PCI Scope buckets has private ACL (enable public ACL for non-pci buckets) 3"
+        name = "Ensure PCI Scope buckets has private ACL (enable public ACL for non-pci buckets) 4"
         id = "CKV_AWS_999"
         supported_resources = ("null_resource",)
         # CheckCategories are defined in models/enums.py
