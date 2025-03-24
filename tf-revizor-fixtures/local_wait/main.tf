@@ -39,7 +39,6 @@ resource "null_resource" "wait" {
   }
 }
 
-
 module "local-wait" {
   source = "./modules/local-wait"
   secret = var.sens
