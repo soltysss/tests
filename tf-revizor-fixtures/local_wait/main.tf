@@ -38,8 +38,6 @@ resource "null_resource" "wait" {
   }
 }
 
-
-
 module "local-wait" {
   source = "./modules/local-wait"
   secret = var.sens
@@ -66,7 +64,7 @@ output "module_res" {
 }
 
 output "sleeped_for" {
-  value = "${var.sleep_time} this is suppose to be sensitive!!!"
+  value = "${var.sleep_time} this is suppose to be sensitive!!!!"
 }
 
 output "run_id" {
