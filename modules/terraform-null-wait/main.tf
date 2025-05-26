@@ -1,6 +1,6 @@
 
 variable "secret" {
-  default   = "xxxxxxx"
+  default   = "xxxxxxxxx"
   sensitive = true
 }
 
@@ -11,7 +11,7 @@ resource "null_resource" "nothing" {
 }
 
 output "the_id" {
-value       = "${null_resource.nothing.id} xxxxxxx"
+value       = "${null_resource.nothing.id} xxxxxxxxx"
 description = "Sensitive null resource id"
 sensitive   = true
 }
