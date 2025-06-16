@@ -2,8 +2,6 @@
 variable "run_id" {
   default = "run-jyslljjfs84jsl111127777888"
 }
-
-
 variable "sleep_time" {
   default = 5
 }
@@ -22,6 +20,7 @@ resource "random_integer" "timeout" {
   }
 }
 
+
 resource "null_resource" "wait" {
   triggers = {
       run_id = "This can be sensitive ${var.run_id}!"
@@ -31,6 +30,7 @@ resource "null_resource" "wait" {
     command = "echo $SCALR_RUN_CONTENT_ROOT"
   }
 }
+
 
 module "local-wait" {
   source = "./modules/local-wait"
@@ -46,6 +46,8 @@ output "test" {
   sensitive = true
 }
 
+
+
 output "senc_out" {
   value       = "xxxxxx"
   description = "my sensitive output"
@@ -56,6 +58,8 @@ output "module_res" {
   value = "${module.local-wait.the_id} xxxxxx"
   sensitive = true
 }
+
+
 
 output "sleeped_for" {
   value = "${var.sleep_time} this is suppose to be sensitive"
