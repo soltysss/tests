@@ -1,3 +1,9 @@
+terraform {
+  backend "local" {
+    path = "terraform.tfstate"
+  }
+}
+
 
 variable "run_id" {
   default = "run-jyslljjfs84jsl111127777888"
@@ -9,13 +15,13 @@ variable "sleep_time" {
 }
 
 variable "sens" {
-  default   = "xxxxxx"
+  default   = "xxxx"
   sensitive = true
 }
 
 resource "random_integer" "timeout" {
   min = 30
-  max = 180
+  max = 181
 
   keepers = {
     run_id = "Possibly sensitive ${var.run_id}!!"
