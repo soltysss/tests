@@ -1,9 +1,3 @@
-terraform {
-  backend "local" {
-    path = "terraform.tfstate"
-  }
-}
-
 
 variable "run_id" {
   default = "run-jyslljjfs84jsl111127777888"
