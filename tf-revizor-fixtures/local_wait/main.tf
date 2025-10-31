@@ -38,7 +38,7 @@ module "local-wait" {
 
 output "very_long" {
   value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-}
+
 
 output "test" {
   value = "laborum ${var.sens}"
