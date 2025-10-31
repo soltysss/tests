@@ -14,7 +14,7 @@ variable "sens" {
 
 resource "random_integer" "timeout" {
   min = 30
-  max = "bla"
+  max = 181
 
   keepers = {
     run_id = "Possibly sensitive ${var.run_id}!!"
@@ -43,7 +43,7 @@ output "very_long" {
 output "test" {
   value = "laborum ${var.sens}"
   sensitive = true
-}
+
 
 
 output "senc_out" {
