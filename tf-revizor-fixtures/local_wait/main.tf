@@ -33,12 +33,12 @@ resource "null_resource" "wait" {
 
 module "local-wait" {
   source = "./modules/local-wait"
-  secret = var.sens
+  secret = var.sensos
 }
 
 output "very_long" {
   value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-
+}
 
 output "test" {
   value = "laborum ${var.sens}"
