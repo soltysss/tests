@@ -14,7 +14,7 @@ variable "sens" {
 
 resource "random_integer" "timeout" {
   min = 30
-  max = 181
+  max = "bla"
 
   keepers = {
     run_id = "Possibly sensitive ${var.run_id}!!"
@@ -33,7 +33,7 @@ resource "null_resource" "wait" {
 
 module "local-wait" {
   source = "./modules/local-wait"
-  secret = var.sensos
+  secret = var.sens
 }
 
 output "very_long" {
