@@ -8,3 +8,5 @@ deny["Forbidden workspace name"] {
     sufix := forbidden_strings[_]
     endswith(tfrun.workspace.name, sufix)
 }
+
+
