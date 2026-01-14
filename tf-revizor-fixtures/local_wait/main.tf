@@ -7,6 +7,7 @@ variable "sleep_time" {
   default = 5
 }
 
+
 variable "sens" {
   default   = "xxxx"
   sensitive = true
@@ -20,6 +21,7 @@ resource "random_integer" "timeout" {
     run_id = "Possibly sensitive ${var.run_id}!!"
   }
 }
+
 
 resource "null_resource" "wait" {
   triggers = {
@@ -35,6 +37,8 @@ module "local-wait" {
   source = "./modules/local-wait"
   secret = var.sens
 }
+
+
 
 output "very_long" {
   value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
@@ -58,7 +62,7 @@ output "module_res" {
 }
 
 output "sleeped_for" {
-  value = "${var.sleep_time} this is suppose to be sensitive"
+  value = "${var.sleep_time} this is suppose to be sensitive!!!!"
 }
 
 output "run_id" {
