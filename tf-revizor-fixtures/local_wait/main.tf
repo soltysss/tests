@@ -64,4 +64,28 @@ output "sleeped_for" {
 output "run_id" {
   value = "${var.run_id} this is suppose to be sensitive. real value is 555555"
 }
-  
+
+
+# A simple list of strings
+output "public_subnets" {
+  value = ["subnet-12345", "subnet-67890", "subnet-abcde"]
+}
+
+# A map of configuration values
+output "tags" {
+  value = {
+    environment = "production"
+    team        = "platform-eng"
+    cost_center = "12345"
+  }
+}
+
+# A complex list of objects (Good for stress-testing your provider's decoder)
+output "db_instances" {
+  value = [
+    { id = "db-1", role = "primary" },
+    { id = "db-2", role = "replica" }
+  ]
+}
+
+
