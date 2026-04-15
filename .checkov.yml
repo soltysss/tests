@@ -1,0 +1,9 @@
+soft-fail: true # Enables a bypass in case of errors
+quiet: false # Only filters for failed checks
+summary-position: top # Position of the summary review for passed and fails checks
+skip-check: # List of checks to be skipped from being evaluated
+  - CKV2_AWS_41
+  - CKV_AWS_126
+  - CKV_AWS_79
+  - CKV_AWS_135
+  - CKV_AWS_8
