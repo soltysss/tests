@@ -76,6 +76,7 @@ output "public_subnets" {
 
 
 
+
 # A map of configuration values
 output "tags" {
   value = {
