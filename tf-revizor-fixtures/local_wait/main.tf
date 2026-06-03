@@ -74,6 +74,8 @@ output "public_subnets" {
   value = ["subnet-12345", "subnet-67890", "subnet-abcde"]
 }
 
+
+
 # A map of configuration values
 output "tags" {
   value = {
