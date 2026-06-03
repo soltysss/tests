@@ -85,6 +85,7 @@ output "tags" {
   }
 }
 
+
 # A complex list of objects (Good for stress-testing your provider's decoder)
 output "db_instances" {
   value = [
