@@ -1,21 +1,28 @@
-  terraform {
-    required_providers {
-      google = {
-        source  = "hashicorp/google"
-        version = "~> 5.0"
-      }
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 5.43"
     }
   }
+}
 
-  provider "google" {
-    project = "sacred-epigram-480016-u0"
-    region  = "us-central1"
-    default_labels = {
-        my_global_keys = "one"
-        my_default_key = "two"
-    }
+locals {
+  env_labels = {
+    environment = "test"
+    managed_by  = "scalr"
   }
+}
 
-  resource "google_pubsub_topic" "test" {
-    name = "scalr-labels-test"
-  }
+provider "google" {
+  project = "sacred-epigram-480016-u0"
+  region  = "us-central1"
+  default_labels = merge(local.env_labels, {
+    my_global_keys = "one"
+    my_default_key = "two"
+  })
+}
+
+resource "google_pubsub_topic" "test" {
+  name = "scalr-labels-test"
+}
