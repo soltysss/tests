@@ -7,8 +7,11 @@ terraform {
   }
 }
 
-data "aws_caller_identity" "current" {}
+# Wrapper module — calls the actual module under test (simulates a private-registry module call)
+module "gl10_test" {
+  source = "./child"
+}
 
 output "account_id" {
-  value = data.aws_caller_identity.current.account_id
+  value = module.gl10_test.account_id
 }
