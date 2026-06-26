@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-east-2"
-}
-
 run "test_caller_identity" {
   command = plan
 
