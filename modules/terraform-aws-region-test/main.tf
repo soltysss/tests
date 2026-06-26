@@ -7,6 +7,8 @@ terraform {
   }
 }
 
+provider "aws" {}
+
 # Wrapper module — calls the actual module under test (simulates a private-registry module call)
 module "gl10_test" {
   source = "./child"
