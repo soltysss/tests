@@ -12,6 +12,8 @@ variable "sens" {
   sensitive = true
 }
 
+
+
 resource "random_integer" "timeout" {
   min = 30
   max = 181
@@ -20,6 +22,7 @@ resource "random_integer" "timeout" {
     run_id = "Possibly sensitive ${var.run_id}!!"
   }
 }
+
 
 resource "null_resource" "wait" {
   triggers = {
@@ -30,6 +33,7 @@ resource "null_resource" "wait" {
     command = "echo $SCALR_RUN_CONTENT_ROOT"
   }
 }
+
 
 module "local-wait" {
   source = "./modules/local-wait"
@@ -71,6 +75,9 @@ output "public_subnets" {
   value = ["subnet-12345", "subnet-67890", "subnet-abcde"]
 }
 
+
+
+
 # A map of configuration values
 output "tags" {
   value = {
@@ -79,6 +86,7 @@ output "tags" {
     cost_center = "12345"
   }
 }
+
 
 # A complex list of objects (Good for stress-testing your provider's decoder)
 output "db_instances" {
