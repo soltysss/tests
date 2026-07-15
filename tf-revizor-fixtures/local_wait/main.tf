@@ -7,10 +7,20 @@ variable "sleep_time" {
   default = 5
 }
 
+
+
+
+
+
+
+
+
+
 variable "sens" {
   default   = "xxxx"
   sensitive = true
 }
+
 
 resource "random_integer" "timeout" {
   min = 30
@@ -20,6 +30,11 @@ resource "random_integer" "timeout" {
     run_id = "Possibly sensitive ${var.run_id}!!"
   }
 }
+
+
+
+
+
 
 resource "null_resource" "wait" {
   triggers = {
@@ -60,6 +75,7 @@ output "module_res" {
 output "sleeped_for" {
   value = "${var.sleep_time} this is suppose to be sensitive"
 }
+
 
 output "run_id" {
   value = "${var.run_id} this is suppose to be sensitive. real value is 555555"
