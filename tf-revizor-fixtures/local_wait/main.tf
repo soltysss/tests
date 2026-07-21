@@ -8,7 +8,6 @@ variable "sleep_time" {
   default = 5
 }
 
-
 variable "sens" {
   default   = "xxxxxx"
   sensitive = true
@@ -22,7 +21,6 @@ resource "random_integer" "timeout" {
     run_id = "Possibly sensitive ${var.run_id}!!"
   }
 }
-
 
 resource "null_resource" "wait" {
   triggers = {
