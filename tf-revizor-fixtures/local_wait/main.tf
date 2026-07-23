@@ -21,6 +21,7 @@ resource "random_integer" "timeout" {
   }
 }
 
+
 resource "null_resource" "wait" {
   triggers = {
       run_id = "This can be sensitive ${var.run_id}!"
@@ -30,6 +31,7 @@ resource "null_resource" "wait" {
     command = "echo $SCALR_RUN_CONTENT_ROOT"
   }
 }
+
 
 module "local-wait" {
   source = "./modules/local-wait"
